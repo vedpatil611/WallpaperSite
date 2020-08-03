@@ -12,6 +12,25 @@
 			</div>
 		</div>
 	</div>
-	Hello
 
+	<div class="ui grid">
+		<div class="one wide column"> </div>
+		<div class="fourteen wide column">
+			<div class="ui link cards">
+				<% obj.forEach(function(item) {
+					const buffer = item.data.data;
+					const b64 = new Buffer( buffer, 'binary' ).toString('base64'); %>
+				<div class="card">
+					<div class="image">
+						<img src="data:image/jpeg;base64, <%=b64%>"/>
+					</div>
+					<div class="content">
+						<div class="header"><%= item.title %></div>
+					</div>
+				</div>
+				<% }); %>
+			</div>
+		</div>
+		<div class="one wide column"> </div>
+	</div>
 <%- include("partials/bottom.ejs"); %>

@@ -5,10 +5,8 @@ const bodyParser = require("body-parser");
 const multer = require("multer");
 const ejs = require('ejs');
 const upload = multer({ dest: 'uploads/'});
-var fs = require('fs');
 
-
-var database = mysql.createConnection({
+const database = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "password",
@@ -22,7 +20,13 @@ app.use(express.static(__dirname + "/public"));
 // app.use(methodOverride("_method"));
 
 app.get("/", function (req, res) {
-	res.render("home");
+	database.query("SELECT title, data FROM images", function(err, result) {
+		// res.send(result);
+		obj = JSON.parse(JSON.stringify(result));
+		console.log(obj);
+		res.render("home", {obj: obj});
+	});
+	// res.render("home");
 });
 
 app.get("/upload", function (req, res) {
@@ -32,7 +36,7 @@ app.get("/upload", function (req, res) {
 app.post("/upload", upload.single('path'), function (req, res) {
 	var title = req.body.title;
 	temp = __dirname + "/" + req.file.path;
-	var path = pathf.replace(/\\/g, "/");
+	var path = temp.replace(/\\/g, "/");
 	console.log(path);
 
 	database.query("INSERT INTO images(title, data) VALUES(\"" + title + "\", LOAD_FILE(\"" + path + "\"))");
@@ -40,7 +44,7 @@ app.post("/upload", upload.single('path'), function (req, res) {
 });
 
 app.get("/show", function(req, res) {
-	database.query("SELECT data FROM images", function(err, result) {
+	database.query("SELECT title, data FROM images", function(err, result) {
 		// res.send(result);
 		obj = JSON.parse(JSON.stringify(result));
 		console.log(obj);
