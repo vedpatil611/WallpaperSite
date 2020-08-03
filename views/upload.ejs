@@ -1,0 +1,41 @@
+<%- include("partials/top.ejs"); %>
+
+
+	<div class="ui inverted menu">
+		<a class="header item" href="/">Wallpaper</a>
+		<a class="item active" href="upload">Upload</a>
+		<div class="right menu">
+			<div class="item">
+				<div class="ui transparent inverted icon input">
+					<i class="search icon"></i>
+					<input type="text" placeholder="Search">
+				</div>
+			</div>
+		</div>
+	</div>
+
+<div class="ui grid">
+	<div class="one wide column"> </div>
+	<div class="fourteen wide column">
+	<form class="ui form" action="/upload" method="post" enctype="multipart/form-data">
+		<div class="ui fluid segment">
+			<input type="file" (change)="fileEvent($event)" class="inputfile" id="embedpollfileinput" name="path"/>
+
+			<label for="embedpollfileinput" class="ui green button">
+				<i class="ui upload icon"></i> 
+				Upload image
+			</label>
+		</div>
+		<div class="field">
+    		<label>Image title</label>
+    		<div class="ui input">
+    			<input type="text" name="title" placeholder="Image name">
+    		</div>
+  		</div>
+		<button class="ui button" type="submit" value="submit">Submit</button>
+	</form>
+	</div>
+	<div class="one wide column"> </div>
+</div>
+
+<%- include("partials/bottom.ejs"); %>

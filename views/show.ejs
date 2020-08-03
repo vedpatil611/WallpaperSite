@@ -1,0 +1,11 @@
+<%- include("partials/top.ejs"); %>
+
+<% obj.forEach(function(item) {
+	const a = 4; 
+	const buffer = item.data.data;
+	const b64 = new Buffer( buffer, 'binary' ).toString('base64'); %>
+	<img src="data:image/jpeg;<%=b64%>" />
+	<%=b64%>
+<% }); %>
+
+<%- include("partials/bottom.ejs"); %>	
